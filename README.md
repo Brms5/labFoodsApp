@@ -27,6 +27,7 @@ The following technologies were used in the construction of the project:
 - Next.js
 - Jest
 - Style components
+- Material UI
 
 ## :framed_picture: User Interface
 
