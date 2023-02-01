@@ -8,7 +8,7 @@ export const CSSReset = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: sans-serif;
+    font-family: Roboto;
   }
   /* NextJS */
   html {
@@ -23,6 +23,8 @@ export const CSSReset = createGlobalStyle`
   #__next {
     display: flex;
     flex: 1;
+    justify-content: center;
+    align-items: center;
   }
   /* Globals */
   button,
