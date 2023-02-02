@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
-export const LoginStructureDiv = styled.div`
+export const HorizontalLine = styled.hr`
+  border: 1px groove;
+  width: 100%;
+`;
+
+export const RegisterStructureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 65%;
+  height: 75%;
   max-width: 500px;
   width: 100%;
 `;

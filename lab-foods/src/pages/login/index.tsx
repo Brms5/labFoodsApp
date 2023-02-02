@@ -1,5 +1,5 @@
-import { CSSReset } from "@/CSSReset";
-import { Form, LoginDiv, LoginStructureDiv, TextStyled } from "./styled";
+import { CSSReset } from "@/styles/CSSReset";
+import { Form, LoginStructureDiv, TextStyled } from "./styled";
 import logoPng2x from "../../assets/logoPng2x.png";
 import Image from "next/image";
 import {
@@ -14,6 +14,8 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
+import Link from "next/link";
+import { GlobalPage } from "@/styles/GlobalStyle";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +27,7 @@ function Login() {
   };
 
   return (
-    <LoginDiv>
+    <GlobalPage>
       <CSSReset />
       <LoginStructureDiv>
         <Image src={logoPng2x} alt="Logo" priority />
@@ -74,20 +76,22 @@ function Login() {
           >
             Entrar
           </Button>
-          <Button
-            variant="text"
-            style={{
-              color: "black",
-              marginTop: "12px",
-              textTransform: "none",
-              // height: "48px",
-            }}
-          >
-            Não possui cadastro? Clique aqui.
-          </Button>
+          <Link href="/register">
+            <Button
+              variant="text"
+              style={{
+                color: "black",
+                marginTop: "12px",
+                textTransform: "none",
+                // height: "48px",
+              }}
+            >
+              Não possui cadastro? Clique aqui.
+            </Button>
+          </Link>
         </Form>
       </LoginStructureDiv>
-    </LoginDiv>
+    </GlobalPage>
   );
 }
 
