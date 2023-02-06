@@ -1,12 +1,6 @@
 import { CSSReset } from "@/styles/CSSReset";
-import { GlobalPage } from "@/styles/GlobalStyle";
+import { Form, FormStructureDiv, GlobalPage, HorizontalLine, TextStyled } from "@/styles/GlobalStyle";
 import React, { useState } from "react";
-import {
-  Form,
-  HorizontalLine,
-  RegisterStructureDiv,
-  TextStyled,
-} from "./styled";
 import logoPng2x from "../../assets/logoPng2x.png";
 import Image from "next/image";
 import {
@@ -37,7 +31,7 @@ function Register() {
   return (
     <GlobalPage>
       <CSSReset />
-      <RegisterStructureDiv>
+      <FormStructureDiv>
         <div style={{ height: "65px", width: "100%" }}>
           <Link href="/login">
             <ChevronLeftIcon fontSize="large" />
@@ -120,21 +114,23 @@ function Register() {
               placeholder="Mínimo 6 caracteres"
             />
           </FormControl>
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "#e8222e",
-              color: "black",
-              marginTop: "12px",
-              textTransform: "none",
-              height: "48px",
-            }}
-            fullWidth
-          >
-            Criar
-          </Button>
+          <Link href="/address" style={{width: "100%"}}>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#e8222e",
+                color: "black",
+                marginTop: "12px",
+                textTransform: "none",
+                height: "48px",
+              }}
+              fullWidth
+            >
+              Criar
+            </Button>
+          </Link>
         </Form>
-      </RegisterStructureDiv>
+      </FormStructureDiv>
     </GlobalPage>
   );
 }
