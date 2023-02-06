@@ -1,5 +1,5 @@
 import { CSSReset } from "@/styles/CSSReset";
-import { Form, LoginStructureDiv, TextStyled } from "./styled";
+import { LoginStructureDiv } from "./styled";
 import logoPng2x from "../../assets/logoPng2x.png";
 import Image from "next/image";
 import {
@@ -15,7 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import Link from "next/link";
-import { GlobalPage } from "@/styles/GlobalStyle";
+import { Form, GlobalPage, TextStyled } from "@/styles/GlobalStyle";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -83,7 +83,6 @@ function Login() {
                 color: "black",
                 marginTop: "12px",
                 textTransform: "none",
-                // height: "48px",
               }}
             >
               Não possui cadastro? Clique aqui.
