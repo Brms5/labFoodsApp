@@ -6,6 +6,7 @@ import Image from "next/image";
 import {
   Button,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -15,10 +16,82 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Link from "next/link";
+import { postRegister } from "@/services/authentication/register";
+import { PostRegisterForm } from "@/interfaces/authentication/interface";
+import { useRouter } from "next/router";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [userForm, setUserForm] = useState<PostRegisterForm>({
+    name: '',
+    email: '',
+    cpf: '',
+    password: ''
+  });
+  const [confirmPassword, setConfirmPassword] = useState<String>("");
+
+  const handleFormChange = (e: any) => {
+    if (e.target.getAttribute('name') == "formName") {
+      setUserForm({
+        name: e.target.value,
+        email: userForm.email,
+        cpf: userForm.cpf,
+        password: userForm.password
+      })
+    } else if (e.target.getAttribute('name') == "formEmail") {
+      setUserForm({
+        name: userForm.name,
+        email: e.target.value,
+        cpf: userForm.cpf,
+        password: userForm.password
+      })
+    } else if (e.target.getAttribute('name') == "formCpf") {
+      setUserForm({
+        name: userForm.name,
+        email: userForm.email,
+        cpf: e.target.value,
+        password: userForm.password
+      })
+    } else if (e.target.getAttribute('name') == "formPassword") {
+      setUserForm({
+        name: userForm.name,
+        email: userForm.email,
+        cpf: userForm.cpf,
+        password: e.target.value
+      })
+    }
+  };
+
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+  const validateEmail = () => {
+    if (userForm.email.match(pattern)) {
+      return false;
+    } else if (userForm.email.length < 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  const validatePassword = () => {
+    if (userForm.password.length < 1 || userForm.password.length >= 6) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  const patternCpf = /[0-9]+\.[0-9]+\.[0-9]+-[0-9]+/i;
+  const validateCpf = () => {
+    if (userForm.cpf.match(patternCpf)) {
+      return false;
+    } else if (userForm.cpf.length < 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -26,6 +99,19 @@ function Register() {
 
   const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+  };
+
+  const router = useRouter();
+  const handleClickSubmit = async () => {
+    postRegister(userForm).then((response) => {
+      console.log('FORA', response);
+      window.localStorage.setItem("token", response.token);
+      if (response.token) {
+        router.push('/address');
+      }
+    }).catch((error) => {
+      console.log('FORA', error);
+    })
   };
 
   return (
@@ -51,6 +137,11 @@ function Register() {
             required
             margin="dense"
             fullWidth
+            name="formName"
+            value={userForm.name}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              handleFormChange(event);
+            }}
           />
           <TextField
             id="outlined-basic-email"
@@ -60,6 +151,12 @@ function Register() {
             required
             margin="dense"
             fullWidth
+            name="formEmail"
+            value={userForm.email}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              handleFormChange(event);
+            }}
+            error={validateEmail()}
           />
           <TextField
             id="outlined-basic-cpf"
@@ -69,6 +166,12 @@ function Register() {
             required
             margin="dense"
             fullWidth
+            name="formCpf"
+            value={userForm.cpf}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              handleFormChange(event);
+            }}
+            error={validateCpf()}
           />
           <FormControl variant="outlined" fullWidth required margin="dense">
             <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
@@ -89,6 +192,12 @@ function Register() {
               }
               label="Senha"
               placeholder="Mínimo 6 caracteres"
+              name="formPassword"
+              value={userForm.password}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              handleFormChange(event);
+            }}
+            error={validatePassword()}
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth required margin="dense">
@@ -112,9 +221,15 @@ function Register() {
               }
               label="Confirmar"
               placeholder="Mínimo 6 caracteres"
+              value={confirmPassword}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setConfirmPassword(event.target.value);
+            }}
+              error={confirmPassword != userForm.password}
             />
+            <FormHelperText hidden={confirmPassword == userForm.password}>Deve ser a mesma que a anterior.</FormHelperText>
           </FormControl>
-          <Link href="/address" style={{width: "100%"}}>
+          {/* <Link href="/address" style={{width: "100%"}}> */}
             <Button
               variant="contained"
               style={{
@@ -125,10 +240,13 @@ function Register() {
                 height: "48px",
               }}
               fullWidth
+              onClick={() => {
+                handleClickSubmit();
+              }}
             >
               Criar
             </Button>
-          </Link>
+          {/* </Link> */}
         </Form>
       </FormStructureDiv>
     </GlobalPage>

@@ -16,15 +16,52 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Form, GlobalPage, TextStyled } from "@/styles/GlobalStyle";
+import { postLogin } from "@/services/authentication/login";
+import { useRouter } from "next/router";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState<String>("");
+
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+  const validateEmail = () => {
+    if (userEmail.match(pattern)) {
+      return false;
+    } else if (userEmail.length < 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  const validatePassword = () => {
+    if (userPassword.length < 1 || userPassword.length >= 6) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
+
+  const router = useRouter();
+  // const goToHome = router.
+  const handleClickSubmit = async () => {
+    postLogin(userEmail, userPassword).then((response) => {
+      if (response.data.user.hasAddress == true) {
+        router.push('/home');
+      } else if (response.data.token) {
+        router.push('/address');
+      }
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
   return (
     <GlobalPage>
@@ -41,12 +78,22 @@ function Login() {
             required
             margin="dense"
             fullWidth
+            value={userEmail}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setUserEmail(event.target.value);
+            }}
+            error={validateEmail()}
           />
           <FormControl variant="outlined" fullWidth required margin="dense">
             <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
+              value={userPassword}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setUserPassword(event.target.value);
+              }}
+              error={validatePassword()}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -73,10 +120,12 @@ function Login() {
               height: "48px",
             }}
             fullWidth
+            onClick={() => {
+              handleClickSubmit();
+            }}
           >
             Entrar
           </Button>
-          <Link href="/register">
             <Button
               variant="text"
               style={{
@@ -84,10 +133,10 @@ function Login() {
                 marginTop: "12px",
                 textTransform: "none",
               }}
+              onClick={() => router.push("/register")}
             >
               Não possui cadastro? Clique aqui.
             </Button>
-          </Link>
         </Form>
       </LoginStructureDiv>
     </GlobalPage>
