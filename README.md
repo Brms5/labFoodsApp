@@ -10,7 +10,7 @@ https://documenter.getpostman.com/view/7549981/SWTEdGtT
 
 ## :heavy_check_mark: Features
 
-- [ ] Login and registration flow(developing);
+- [X] Login and registration flow(developed);
 - [ ] Search and selection of restaurants(developing);
 - [ ] Restaurant menu(developing);
 - [ ] Cart and checkout(developing);
