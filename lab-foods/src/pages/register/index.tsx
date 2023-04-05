@@ -1,5 +1,11 @@
 import { CSSReset } from "@/styles/CSSReset";
-import { Form, FormStructureDiv, GlobalPage, HorizontalLine, TextStyled } from "@/styles/GlobalStyle";
+import {
+  Form,
+  FormStructureDiv,
+  GlobalPage,
+  HorizontalLine,
+  TextStyled,
+} from "@/styles/GlobalStyle";
 import React, { useState } from "react";
 import logoPng2x from "../../assets/logoPng2x.png";
 import Image from "next/image";
@@ -24,46 +30,46 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userForm, setUserForm] = useState<PostRegisterForm>({
-    name: '',
-    email: '',
-    cpf: '',
-    password: ''
+    name: "",
+    email: "",
+    cpf: "",
+    password: "",
   });
   const [confirmPassword, setConfirmPassword] = useState<String>("");
 
   const handleFormChange = (e: any) => {
-    if (e.target.getAttribute('name') == "formName") {
+    if (e.target.getAttribute("name") == "formName") {
       setUserForm({
         name: e.target.value,
         email: userForm.email,
         cpf: userForm.cpf,
-        password: userForm.password
-      })
-    } else if (e.target.getAttribute('name') == "formEmail") {
+        password: userForm.password,
+      });
+    } else if (e.target.getAttribute("name") == "formEmail") {
       setUserForm({
         name: userForm.name,
         email: e.target.value,
         cpf: userForm.cpf,
-        password: userForm.password
-      })
-    } else if (e.target.getAttribute('name') == "formCpf") {
+        password: userForm.password,
+      });
+    } else if (e.target.getAttribute("name") == "formCpf") {
       setUserForm({
         name: userForm.name,
         email: userForm.email,
         cpf: e.target.value,
-        password: userForm.password
-      })
-    } else if (e.target.getAttribute('name') == "formPassword") {
+        password: userForm.password,
+      });
+    } else if (e.target.getAttribute("name") == "formPassword") {
       setUserForm({
         name: userForm.name,
         email: userForm.email,
         cpf: userForm.cpf,
-        password: e.target.value
-      })
+        password: e.target.value,
+      });
     }
   };
 
-  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
   const validateEmail = () => {
     if (userForm.email.match(pattern)) {
       return false;
@@ -72,7 +78,7 @@ function Register() {
     } else {
       return true;
     }
-  }
+  };
 
   const validatePassword = () => {
     if (userForm.password.length < 1 || userForm.password.length >= 6) {
@@ -80,7 +86,7 @@ function Register() {
     } else {
       return true;
     }
-  }
+  };
 
   const patternCpf = /[0-9]+\.[0-9]+\.[0-9]+-[0-9]+/i;
   const validateCpf = () => {
@@ -91,7 +97,7 @@ function Register() {
     } else {
       return true;
     }
-  }
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -103,15 +109,21 @@ function Register() {
 
   const router = useRouter();
   const handleClickSubmit = async () => {
-    postRegister(userForm).then((response) => {
-      console.log('FORA', response);
-      window.localStorage.setItem("token", response.token);
-      if (response.token) {
-        router.push('/address');
-      }
-    }).catch((error) => {
-      console.log('FORA', error);
-    })
+    if (!validateEmail() && !validatePassword() && !validateCpf()) {
+      postRegister(userForm)
+        .then((response) => {
+          console.log("FORA", response);
+          window.localStorage.setItem("token", response.token);
+          if (response.token) {
+            router.push("/address");
+          }
+        })
+        .catch((error) => {
+          console.log("FORA", error);
+        });
+    } else {
+      alert("Preencha os campos corretamente");
+    }
   };
 
   return (
@@ -195,9 +207,9 @@ function Register() {
               name="formPassword"
               value={userForm.password}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              handleFormChange(event);
-            }}
-            error={validatePassword()}
+                handleFormChange(event);
+              }}
+              error={validatePassword()}
             />
           </FormControl>
           <FormControl variant="outlined" fullWidth required margin="dense">
@@ -223,29 +235,31 @@ function Register() {
               placeholder="Mínimo 6 caracteres"
               value={confirmPassword}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setConfirmPassword(event.target.value);
-            }}
+                setConfirmPassword(event.target.value);
+              }}
               error={confirmPassword != userForm.password}
             />
-            <FormHelperText hidden={confirmPassword == userForm.password}>Deve ser a mesma que a anterior.</FormHelperText>
+            <FormHelperText hidden={confirmPassword == userForm.password}>
+              Deve ser a mesma que a anterior.
+            </FormHelperText>
           </FormControl>
           {/* <Link href="/address" style={{width: "100%"}}> */}
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: "#e8222e",
-                color: "black",
-                marginTop: "12px",
-                textTransform: "none",
-                height: "48px",
-              }}
-              fullWidth
-              onClick={() => {
-                handleClickSubmit();
-              }}
-            >
-              Criar
-            </Button>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#e8222e",
+              color: "black",
+              marginTop: "12px",
+              textTransform: "none",
+              height: "48px",
+            }}
+            fullWidth
+            onClick={() => {
+              handleClickSubmit();
+            }}
+          >
+            Criar
+          </Button>
           {/* </Link> */}
         </Form>
       </FormStructureDiv>
