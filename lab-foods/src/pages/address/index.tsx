@@ -81,7 +81,7 @@ function Address() {
         complement: e.target.value
       });
   };
-}
+};
 
   const router = useRouter();
   const handleClickSubmit = async () => {
