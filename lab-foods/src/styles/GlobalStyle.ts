@@ -37,3 +37,12 @@ export const Form = styled.form`
   align-items: center;
   justify-content: center;
 `;
+
+export const RestaurantsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  /* background-color: yellow; */
+`;
