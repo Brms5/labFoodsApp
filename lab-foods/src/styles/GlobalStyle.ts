@@ -7,6 +7,7 @@ export const GlobalPage = styled.div`
   height: 100vh;
   max-width: 1920px;
   width: 100%;
+  border: 1px solid black;
 `;
 
 export const HorizontalLine = styled.hr`
@@ -36,4 +37,13 @@ export const Form = styled.form`
   width: 100%;
   align-items: center;
   justify-content: center;
+`;
+
+export const RestaurantsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  /* background-color: yellow; */
 `;

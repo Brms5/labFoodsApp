@@ -14,7 +14,6 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useState } from "react";
-import Link from "next/link";
 import { Form, GlobalPage, TextStyled } from "@/styles/GlobalStyle";
 import { postLogin } from "@/services/authentication/login";
 import { useRouter } from "next/router";
@@ -50,7 +49,7 @@ function Login() {
   };
 
   const router = useRouter();
-  // const goToHome = router.
+
   const handleClickSubmit = async () => {
     postLogin(userEmail, userPassword).then((response) => {
       if (response.data.user.hasAddress == true) {
