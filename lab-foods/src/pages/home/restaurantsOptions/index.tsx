@@ -1,22 +1,48 @@
 import { IRestaurant } from "@/interfaces/restaurants/interface";
 import React from "react";
-import { RestaurantOptionDiv, RestaurantsOptionsStructureDiv } from "./styled";
+import { RestaurantsOptionsStructureDiv } from "./styled";
 
 interface IRestaurantsOptions {
   restaurants: IRestaurant[];
+  setRestaurantOption: Function;
+  restaurantOption: string | null;
 }
 
-function RestaurantsOptions({ restaurants }: IRestaurantsOptions) {
+function RestaurantsOptions({
+  restaurants,
+  setRestaurantOption,
+  restaurantOption,
+}: IRestaurantsOptions) {
+
+  const restaurantsCategory = restaurants
+    .map((restaurant) => {
+      return restaurant.category;
+    })
+    .filter((value, index, self) => {
+      return self.indexOf(value) === index;
+    });
+
   return (
     <RestaurantsOptionsStructureDiv>
       {restaurants!.length > 0 ? (
-        restaurants!.map((restaurant) => {
+        restaurantsCategory!.map((category, index) => {
           return (
-            <RestaurantOptionDiv key={restaurant.id}>
-              <button onClick={() => console.log(restaurant.category)} style={{ border: "none", backgroundColor: "white", cursor: "pointer" }}>
-                {restaurant.category}
+            <div key={index}>
+              <button
+                onClick={() =>
+                  setRestaurantOption(
+                    restaurantOption != category ? category : null
+                  )
+                }
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                }}
+              >
+                {category}
               </button>
-            </RestaurantOptionDiv>
+            </div>
           );
         })
       ) : (

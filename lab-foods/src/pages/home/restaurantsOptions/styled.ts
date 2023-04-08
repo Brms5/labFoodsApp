@@ -5,14 +5,14 @@ export const RestaurantsOptionsStructureDiv = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 70%;
-  height: 50px;
+  height: 75px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   gap: 20px;
   background-color: white;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 900px) {
     justify-content: flex-start;
   }
 
@@ -23,5 +23,5 @@ export const RestaurantsOptionsStructureDiv = styled.div`
 
 export const RestaurantOptionDiv = styled.div`
   display: flex;
-  background-color: red;
+  /* background-color: red; */
 `;
