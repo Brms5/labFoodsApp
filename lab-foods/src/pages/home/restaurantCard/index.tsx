@@ -7,9 +7,9 @@ import { CardActionArea } from "@mui/material";
 import { IRestaurant } from "@/interfaces/restaurants/interface";
 
 interface IRestaurantCard {
-    restaurant: IRestaurant;
-    onClickRestaurant: Function;
-  }
+  restaurant: IRestaurant;
+  onClickRestaurant: Function;
+}
 
 function RestaurantCard({ restaurant, onClickRestaurant }: IRestaurantCard) {
   return (
@@ -21,13 +21,31 @@ function RestaurantCard({ restaurant, onClickRestaurant }: IRestaurantCard) {
           image={restaurant.logoUrl}
           alt={restaurant.name}
         />
-        <CardContent style={{ display: "flex", flexDirection: "column", alignItems: "center" , justifyContent: "center" }}>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: "#e8222e", width: "80%" }}>
-          {restaurant.name}
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            style={{ color: "#e8222e", width: "80%" }}
+          >
+            {restaurant.name}
           </Typography>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "80%" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "80%",
+            }}
+          >
             <Typography variant="body2" color="text.secondary">
-            {restaurant.deliveryTime} min
+              {restaurant.deliveryTime} min
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Frete R${restaurant.shipping},00
