@@ -7,11 +7,15 @@ export const GlobalPage = styled.div`
   height: 100vh;
   max-width: 1920px;
   width: 100%;
-  border: 1px solid black;
 `;
 
 export const HorizontalLine = styled.hr`
   border: 1px groove;
+  width: 100%;
+`;
+
+export const HorizontalLineSolid = styled.hr`
+  border: 1px solid black;
   width: 100%;
 `;
 

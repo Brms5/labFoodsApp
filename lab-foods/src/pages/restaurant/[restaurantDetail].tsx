@@ -1,47 +1,153 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
-
+import React, { useEffect, useState } from "react";
+import {
+  GlobalPage,
+  HorizontalLine,
+  HorizontalLineSolid,
+} from "@/styles/GlobalStyle";
+import {
+  IRestaurantDetails,
+} from "@/interfaces/restaurants/interface";
+import {
+  getRestaurantDetails,
+} from "@/services/restaurants/restaurants";
+import { useRouter } from "next/router";
+import { CSSReset } from "@/styles/CSSReset";
+import {
+  RestaurantDetailsDiv,
+  RestaurantDetailsHeader,
+  RestaurantDetailsInformation,
+  RestaurantDetailsMenu,
+  RestaurantImgDiv,
+  RestaurantInformationTxt,
+} from "./styled";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Link from "next/link";
+import RestaurantMenuCard from "./restaurantMenuCard";
 
 function RestaurantDetail() {
-    return (
-        <Card 
-        // className
-        >
-          <CardActionArea>
-            <CardMedia
-              // className
-              // image
-              title="Contemplative Reptile"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h6" component="h3">
+  const [restaurantDetail, setRestaurantDetail] =
+    useState<IRestaurantDetails>();
 
-              </Typography>
-              <Typography component="p"></Typography>
-              <div>
-                <Typography component="p"> min</Typography>
-                <Typography component="p">Frete: R$,00</Typography>
+  const router = useRouter();
+  const restaurantsId = router.query.restaurantDetail;
+
+  useEffect(() => {
+    if (restaurantsId != undefined) {
+      getRestaurantDetails(restaurantsId)
+        .then((response) => {
+          setRestaurantDetail(response.data.restaurant);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [restaurantsId]);
+
+  const getFilteredProductsByCategory = (
+    category: string | undefined
+  ) => {
+    return restaurantDetail?.products
+      .filter((product) => {
+        if (category === undefined) {
+          return (
+            product.category != "Acompanhamento" && product.category != "Bebida"
+          );
+        }
+        return product.category == category;
+      })
+      .map((product) => {
+        return <RestaurantMenuCard key={product.id} product={product} />;
+      });
+  };
+
+  const restaurantMainMenu = getFilteredProductsByCategory(undefined);
+  const restaurantAccompaniments = getFilteredProductsByCategory("Acompanhamento");
+  const restaurantDrinks = getFilteredProductsByCategory("Bebida");
+
+  console.log("restaurantDetail", restaurantDetail);
+  // console.log(restaurantsId);
+
+  return (
+    <GlobalPage>
+      <CSSReset />
+      <RestaurantDetailsDiv>
+        <RestaurantDetailsHeader>
+          <div>
+            <Link href="/home">
+              <ArrowBackIosIcon fontSize="small" />
+            </Link>
+          </div>
+          <div
+            style={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <h3>Restaurante</h3>
+          </div>
+        </RestaurantDetailsHeader>
+        <HorizontalLine />
+        {restaurantDetail ? (
+          <RestaurantDetailsInformation>
+            <RestaurantImgDiv
+              src={restaurantDetail.logoUrl}
+              alt={restaurantDetail.name}
+            />
+            <h1
+              style={{
+                display: "flex",
+                width: "50%",
+                color: "#e8222e",
+                marginTop: "10px",
+              }}
+            >
+              {restaurantDetail.name}
+            </h1>
+            <RestaurantInformationTxt style={{ color: "#b8b8b8" }}>
+              {restaurantDetail.category}
+            </RestaurantInformationTxt>
+            <RestaurantInformationTxt
+              style={{
+                color: "#b8b8b8",
+              }}
+            >
+              <div style={{ marginRight: "50px" }}>
+                {restaurantDetail.deliveryTime} min
               </div>
-              <Typography component="p"></Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      );
+              <div>Frete R${restaurantDetail.shipping},00</div>
+            </RestaurantInformationTxt>
+            <RestaurantInformationTxt style={{ color: "#b8b8b8" }}>
+              {restaurantDetail.address}
+            </RestaurantInformationTxt>
+            <h2 style={{ margin: "20px 0px 10px 0px", width: "50%" }}>
+              Principais
+            </h2>
+            <HorizontalLineSolid style={{ width: "50%" }} />
+            <RestaurantDetailsMenu>{restaurantMainMenu}</RestaurantDetailsMenu>
+            {restaurantAccompaniments!.length > 0 ? (
+              <>
+                <h2 style={{ margin: "20px 0px 10px 0px", width: "50%" }}>
+                  Acompanhamentos
+                </h2>
+                <HorizontalLineSolid style={{ width: "50%" }} />
+                <RestaurantDetailsMenu>
+                  {restaurantAccompaniments}
+                </RestaurantDetailsMenu>
+              </>
+            ) : (
+              <></>
+            )}
+            <h2 style={{ margin: "20px 0px 10px 0px", width: "50%" }}>
+              Bebidas
+            </h2>
+            <HorizontalLineSolid style={{ width: "50%" }} />
+            <RestaurantDetailsMenu style={{ marginBottom: "100px" }}>
+              {restaurantDrinks}
+            </RestaurantDetailsMenu>
+          </RestaurantDetailsInformation>
+        ) : (
+          "Carregando..."
+        )}
+      </RestaurantDetailsDiv>
+    </GlobalPage>
+  );
 }
 
 export default RestaurantDetail;
-
-
-
-// const styles = {
-//   card: {
-//     minWidth: 320,
-//     maxWidth: 450,
-//     minHeight: 180,
-//     margin: 10,
-//   },
-//   media: {
-//     height: 130,
-//   },
-// };

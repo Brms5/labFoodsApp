@@ -37,15 +37,15 @@ function Home() {
       <RestaurantCard
         key={restaurant.id}
         restaurant={restaurant}
-        onClickRestaurant={() => onClickRestaurant(restaurant.name)}
+        onClickRestaurant={() => onClickRestaurant(restaurant.id)}
       />
     );
   });
 
-  const onClickRestaurant = (name: string) => {
+  const onClickRestaurant = (id: string) => {
     router.push({
-      pathname: "/restaurant/[name]",
-      query: { name },
+      pathname: "/restaurant/[id]",
+      query: { id },
     });
   };
 
@@ -53,7 +53,6 @@ function Home() {
     getRestaurants()
       .then((response) => {
         setRestaurants(response.data.restaurants);
-        console.log(response.data.restaurants);
       })
       .catch((error) => {
         console.log(error);
