@@ -39,9 +39,10 @@ export default function ProductAddModal({
   setOrderNumber,
 }: IProductAddModal) {
   const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState<number>(0);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setOrderNumber(event.target.value);
+    setQuantity(parseInt(event.target.value));
   };
 
   const handleOpen = () => setOpen(true);
@@ -84,8 +85,8 @@ export default function ProductAddModal({
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={orderNumber}
-              label="orderNumber"
+              value={quantity}
+              label="quantity"
               onChange={handleChange}
             >
               {[...Array(10).keys()].map((item) => {
@@ -97,7 +98,7 @@ export default function ProductAddModal({
               })}
             </Select>
           </FormControl>
-          <Button onClick={handleClose}>ADICIONAR AO CARRINHO</Button>
+          <Button onClick={() => {handleClose(); setOrderNumber(quantity);} }>ADICIONAR AO CARRINHO</Button>
         </Box>
       </Modal>
     </div>
