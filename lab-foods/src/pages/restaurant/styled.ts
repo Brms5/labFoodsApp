@@ -5,7 +5,7 @@ export const RestaurantDetailsDiv = styled.div`
   flex-direction: column;
   align-items: center;
   width: 65%;
-  height: 95vh;
+  /* height: 95vh; */
   /* background: yellow; */
 `;
 
@@ -13,7 +13,7 @@ export const RestaurantDetailsHeader = styled.div`
   display: flex;
   align-items: center;
   width: 50%;
-  height: 5%;
+  height: 50px;
 `;
 
 export const RestaurantDetailsInformation = styled.div`

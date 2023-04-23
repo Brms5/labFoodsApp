@@ -4,7 +4,8 @@ export const LoginStructureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 65%;
+  justify-content: center;
+  height: 65vh;
   max-width: 500px;
   width: 100%;
 `;

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   GlobalPage,
   HorizontalLine,
   HorizontalLineSolid,
 } from "@/styles/GlobalStyle";
-import {
-  IRestaurantDetails,
-} from "@/interfaces/restaurants/interface";
-import {
-  getRestaurantDetails,
-} from "@/services/restaurants/restaurants";
+import { IRestaurantDetails } from "@/interfaces/restaurants/interface";
+import { getRestaurantDetails } from "@/services/restaurants/restaurants";
 import { useRouter } from "next/router";
 import { CSSReset } from "@/styles/CSSReset";
 import {
@@ -23,8 +19,11 @@ import {
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
 import RestaurantMenuCard from "./restaurantMenuCard";
+import MainMenu from "@/components/mainMenu";
+import { GlobalContext } from "@/context/context";
 
 function RestaurantDetail() {
+  const { setRestaurantOrder } = useContext(GlobalContext);
   const [restaurantDetail, setRestaurantDetail] =
     useState<IRestaurantDetails>();
 
@@ -36,6 +35,13 @@ function RestaurantDetail() {
       getRestaurantDetails(restaurantsId)
         .then((response) => {
           setRestaurantDetail(response.data.restaurant);
+          setRestaurantOrder({
+            id: response.data.restaurant.id,
+            name: response.data.restaurant.name,
+            address: response.data.restaurant.address,
+            deliveryTime: response.data.restaurant.deliveryTime,
+            shipping: response.data.restaurant.shipping,            
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -43,9 +49,7 @@ function RestaurantDetail() {
     }
   }, [restaurantsId]);
 
-  const getFilteredProductsByCategory = (
-    category: string | undefined
-  ) => {
+  const getFilteredProductsByCategory = (category: string | undefined) => {
     return restaurantDetail?.products
       .filter((product) => {
         if (category === undefined) {
@@ -61,15 +65,14 @@ function RestaurantDetail() {
   };
 
   const restaurantMainMenu = getFilteredProductsByCategory(undefined);
-  const restaurantAccompaniments = getFilteredProductsByCategory("Acompanhamento");
+  const restaurantAccompaniments =
+    getFilteredProductsByCategory("Acompanhamento");
   const restaurantDrinks = getFilteredProductsByCategory("Bebida");
-
-  console.log("restaurantDetail", restaurantDetail);
-  // console.log(restaurantsId);
 
   return (
     <GlobalPage>
       <CSSReset />
+      <MainMenu />
       <RestaurantDetailsDiv>
         <RestaurantDetailsHeader>
           <div>

@@ -2,11 +2,13 @@ import styled from "styled-components";
 
 export const GlobalPage = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: flex-start;
+  min-height: 100vh;
   max-width: 1920px;
   width: 100%;
+  /* background: salmon; */
 `;
 
 export const HorizontalLine = styled.hr`
@@ -23,7 +25,8 @@ export const FormStructureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 75%;
+  justify-content: center;
+  height: 75vh;
   max-width: 500px;
   width: 100%;
 `;

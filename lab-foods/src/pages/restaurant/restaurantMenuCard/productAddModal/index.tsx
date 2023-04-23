@@ -9,8 +9,10 @@ import {
   SelectChangeEvent,
   Button,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AddButton, RemoveButton } from "./style";
+import { IProduct } from "@/interfaces/restaurantProduct/interface";
+import { GlobalContext } from "@/context/context";
 
 const style = {
   display: "flex",
@@ -32,20 +34,36 @@ const style = {
 interface IProductAddModal {
   orderNumber: number;
   setOrderNumber: Function;
+  product: IProduct;
 }
 
 export default function ProductAddModal({
   orderNumber,
   setOrderNumber,
+  product,
 }: IProductAddModal) {
+  const { cart, setCart } = useContext(GlobalContext);
   const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState<number>(0);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setOrderNumber(event.target.value);
+    setQuantity(parseInt(event.target.value));
   };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleRemoveProduct = () => {
+    const productToRemove = cart.find(
+      (item: any) => item.product.id === product.id
+    );
+    if (!productToRemove) return;
+    const index = cart.indexOf(productToRemove);
+    cart.splice(index, 1);
+    setCart([...cart]);
+    setOrderNumber(0);
+    setQuantity(0);
+  };
 
   return (
     <div>
@@ -57,7 +75,12 @@ export default function ProductAddModal({
         </AddButton>
       ) : (
         <RemoveButton>
-          <button onClick={() => setOrderNumber(0)}  style={{ cursor: "pointer" }}>remover</button>
+          <button
+            onClick={() => handleRemoveProduct()}
+            style={{ cursor: "pointer" }}
+          >
+            remover
+          </button>
         </RemoveButton>
       )}
       <Modal
@@ -84,8 +107,8 @@ export default function ProductAddModal({
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={orderNumber}
-              label="orderNumber"
+              value={quantity}
+              label="quantity"
               onChange={handleChange}
             >
               {[...Array(10).keys()].map((item) => {
@@ -97,7 +120,21 @@ export default function ProductAddModal({
               })}
             </Select>
           </FormControl>
-          <Button onClick={handleClose}>ADICIONAR AO CARRINHO</Button>
+          <Button
+            onClick={() => {
+              handleClose();
+              setOrderNumber(quantity);
+              setCart([
+                ...cart,
+                {
+                  product: product,
+                  quantity: quantity,
+                },
+              ]);
+            }}
+          >
+            ADICIONAR AO CARRINHO
+          </Button>
         </Box>
       </Modal>
     </div>

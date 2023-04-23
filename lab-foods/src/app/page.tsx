@@ -6,17 +6,17 @@ import Image from "next/image";
 import logoPng3x from "../assets/logoPng3x.png";
 import Link from "next/link";
 
-function Home() {
+function Page() {
   return (
     <>
       <CSSReset />
       <Link href="/login">
-      <HomeDiv>
-        <Image src={logoPng3x} alt="Logo" />
-      </HomeDiv>
+        <HomeDiv>
+          <Image src={logoPng3x} alt="Logo" />
+        </HomeDiv>
       </Link>
     </>
   );
 }
 
-export default Home;
+export default Page;

@@ -1,3 +1,4 @@
+import { IProductCart } from "@/interfaces/restaurantProduct/interface";
 import React from "react";
 import { ProductOrderNumberDiv } from "./style";
 

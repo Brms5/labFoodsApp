@@ -38,6 +38,7 @@ function RestaurantsOptions({
                   border: "none",
                   backgroundColor: "white",
                   cursor: "pointer",
+                  color: restaurantOption == category ? "#e8222e" : "black",
                 }}
               >
                 {category}
