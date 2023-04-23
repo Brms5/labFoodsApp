@@ -13,7 +13,7 @@ https://documenter.getpostman.com/view/7549981/SWTEdGtT
 - [X] Login and registration flow(developed);
 - [X] Search and selection of restaurants(developed);
 - [X] Restaurant menu(developed);
-- [ ] Cart and checkout(developing);
+- [X] Cart and checkout(developed);
 - [ ] Profile, edit profile and order history(developing).
 
 ## :hammer_and_wrench: Technology
