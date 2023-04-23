@@ -3,7 +3,6 @@ import {
   PutAddressForm,
 } from "@/interfaces/authentication/interface";
 import axios from "axios";
-import { useRouter } from "next/router";
 
 export const postRegister = async (form: PostRegisterForm) => {
   try {

@@ -1,4 +1,8 @@
-import { GlobalPage, RestaurantsDiv } from "@/styles/GlobalStyle";
+import {
+  GlobalPage,
+  HorizontalLine,
+  RestaurantsDiv,
+} from "@/styles/GlobalStyle";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,11 +14,14 @@ import RestaurantsOptions from "./restaurantsOptions";
 import RestaurantCard from "./restaurantCard";
 import { RestaurantsCardsDiv } from "./styled";
 import { useRouter } from "next/router";
+import MainMenu from "@/components/mainMenu";
+import { getActiveOrder } from "@/services/order/order";
 
 function Home() {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
   const [search, setSearch] = useState("");
-  const [restaurantOption, setRestaurantOption] = useState<string|null>(null);
+  const [restaurantOption, setRestaurantOption] = useState<string | null>(null);
+  const [activeOrder, setActiveOrder] = useState();
 
   const router = useRouter();
 
@@ -57,11 +64,21 @@ function Home() {
       .catch((error) => {
         console.log(error);
       });
+    getActiveOrder()
+      .then((response) => {
+        console.log("response", response);
+        setActiveOrder(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Erro ao buscar o pedido ativo");
+      });
   }, []);
 
   return (
     <GlobalPage>
       <CSSReset />
+      <MainMenu />
       <RestaurantsDiv>
         <TextField
           // fullWidth
@@ -80,7 +97,11 @@ function Home() {
             setSearch(event.target.value);
           }}
         />
-        <RestaurantsOptions restaurants={restaurants} setRestaurantOption={setRestaurantOption} restaurantOption={restaurantOption} />
+        <RestaurantsOptions
+          restaurants={restaurants}
+          setRestaurantOption={setRestaurantOption}
+          restaurantOption={restaurantOption}
+        />
         <RestaurantsCardsDiv>{restaurantsComponents}</RestaurantsCardsDiv>
       </RestaurantsDiv>
     </GlobalPage>

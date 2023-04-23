@@ -1,5 +1,11 @@
-import { IProduct } from "@/interfaces/restaurants/interface";
-import React, { useState } from "react";
+"use client";
+
+import { GlobalContext } from "@/context/context";
+import {
+  IProduct,
+  IProductCart,
+} from "@/interfaces/restaurantProduct/interface";
+import React, { useContext, useMemo, useState } from "react";
 import ProductAddModal from "./productAddModal";
 import ProductOrderNumber from "./productOrderNumber";
 import {
@@ -15,9 +21,25 @@ interface IRestaurantMenuCard {
 }
 
 function RestaurantMenuCard({ product }: IRestaurantMenuCard) {
+  const { cart } = useContext(GlobalContext);
   const [orderNumber, setOrderNumber] = useState<number>(0);
 
-  console.log("orderNumber", orderNumber);
+  const handleOrderNumber = useMemo(() => {
+    const productsInCart = cart.map((products) => {
+      return products;
+    });
+    const isProductInCart = productsInCart.find(
+      (item) => item.product.id === product.id
+    );
+    if (isProductInCart) {
+      setOrderNumber(isProductInCart.quantity);
+    }
+    return isProductInCart;
+  }, [cart, product]);
+
+  console.log("cart", cart);
+
+  console.log("isProductInCart", handleOrderNumber);
 
   return (
     <RestaurantDetailContainer>
@@ -30,13 +52,18 @@ function RestaurantMenuCard({ product }: IRestaurantMenuCard) {
           </span>
           <span style={{ fontSize: "20px" }}>R${product.price}</span>
         </TextRestaurantCard>
-        <OrderNumberDiv style={{ justifyContent: (orderNumber == 0) ? "flex-end" : "space-between"} }>
+        <OrderNumberDiv
+          style={{
+            justifyContent: orderNumber == 0 ? "flex-end" : "space-between",
+          }}
+        >
           {orderNumber > 0 ? (
             <ProductOrderNumber orderNumber={orderNumber} />
           ) : null}
           <ProductAddModal
             orderNumber={orderNumber}
             setOrderNumber={setOrderNumber}
+            product={product}
           />
         </OrderNumberDiv>
       </RestaurantCard>

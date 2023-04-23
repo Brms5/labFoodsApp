@@ -1,3 +1,5 @@
+import { IProduct } from "../restaurantProduct/interface";
+
 export interface IRestaurant {
   address: string;
   category: string;
@@ -21,12 +23,10 @@ export interface IRestaurantDetails {
   shipping: number;
 }
 
-export interface IProduct {
-  category: string;
-  description: string;
-  id: string;
+export interface IRestaurantOrder {
+  id: number;
   name: string;
-  photoUrl: string;
-  price: number;
+  address: string;
+  deliveryTime: number;
+  shipping: number;
 }
-
