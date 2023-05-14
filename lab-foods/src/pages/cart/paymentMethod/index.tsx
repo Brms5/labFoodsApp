@@ -12,7 +12,7 @@ function PaymentMethod({ paymentMethod, setPaymentMethod }: IPaymentMethod) {
   return (
     <PaymentMethodContainer>
       <PaymentOptionsContainer>
-        <button onClick={() => setPaymentMethod("money")}>
+        <button onClick={() => setPaymentMethod("money")} style={{ marginLeft: "16px" }}>
           {paymentMethod === "money" ? (
             <RadioButtonCheckedRoundedIcon />
           ) : (
@@ -22,7 +22,7 @@ function PaymentMethod({ paymentMethod, setPaymentMethod }: IPaymentMethod) {
         <span>Dinheiro</span>
       </PaymentOptionsContainer>
       <PaymentOptionsContainer>
-        <button onClick={() => setPaymentMethod("creditcard")}>
+        <button onClick={() => setPaymentMethod("creditcard")} style={{ marginLeft: "16px" }}>
           {paymentMethod === "creditcard" ? (
             <RadioButtonCheckedRoundedIcon />
           ) : (

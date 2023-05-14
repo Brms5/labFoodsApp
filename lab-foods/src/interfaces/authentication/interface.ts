@@ -1,15 +1,21 @@
 export interface PostRegisterForm {
-  name: "";
-  email: "";
-  cpf: "";
-  password: "";
+  name: String;
+  email: String;
+  cpf: String;
+  password: String;
+}
+
+export interface PutRegisterForm {
+  name: String;
+  email: String;
+  cpf: String;
 }
 
 export interface PutAddressForm {
-  street: "";
-  number: "";
-  neighbourhood: "";
-  city: "";
-  state: "";
-  complement: "";
+  street: String;
+  number: String;
+  neighbourhood: String;
+  city: String;
+  state: String;
+  complement: String;
 }

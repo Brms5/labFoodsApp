@@ -3,7 +3,6 @@
 import { GlobalContext } from "@/context/context";
 import {
   IProduct,
-  IProductCart,
 } from "@/interfaces/restaurantProduct/interface";
 import React, { useContext, useMemo, useState } from "react";
 import ProductAddModal from "./productAddModal";
@@ -36,10 +35,6 @@ function RestaurantMenuCard({ product }: IRestaurantMenuCard) {
     }
     return isProductInCart;
   }, [cart, product]);
-
-  console.log("cart", cart);
-
-  console.log("isProductInCart", handleOrderNumber);
 
   return (
     <RestaurantDetailContainer>

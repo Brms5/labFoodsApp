@@ -3,19 +3,24 @@ import { GlobalContext } from "@/context/context";
 import { IAddress } from "@/interfaces/address/interface";
 import { getAddress } from "@/services/user/address";
 import { CSSReset } from "@/styles/CSSReset";
-import { GlobalPage, HorizontalLineSolid } from "@/styles/GlobalStyle";
-import Link from "next/link";
+import {
+  GlobalPage,
+  HorizontalLine,
+  HorizontalLineSolid,
+} from "@/styles/GlobalStyle";
 import React, { useContext, useEffect, useState } from "react";
 import RestaurantMenuCard from "../restaurant/restaurantMenuCard";
 import { RestaurantDetailsMenu } from "../restaurant/styled";
 import OrderAddress from "./orderAddress";
-import RestaurantDetails from "./restaurantDetails";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
-import ShippingOrder from "./shippingOrder";
 import PaymentMethod from "./paymentMethod";
 import { Button } from "@mui/material";
-import { postOrder } from "@/services/order/order";
+import { getActiveOrder, postOrder } from "@/services/order/order";
+import { CartDetailsHeader, OrderContainerDiv } from "./style";
+import ShippingOrder from "./shippingOrder";
+import RestaurantOrderDetails from "./restaurantOrderDetails";
+import { IOrderHistory } from "@/interfaces/cart/interface";
 
 function Cart() {
   const { cart, restaurantOrder } = useContext(GlobalContext);
@@ -28,6 +33,7 @@ function Cart() {
     street: "",
   });
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [activeOrder, setActiveOrder] = useState<IOrderHistory>();
 
   const router = useRouter();
 
@@ -38,6 +44,15 @@ function Cart() {
       })
       .catch((error) => {
         console.log(error);
+      });
+      getActiveOrder()
+      .then((response) => {
+        console.log("response", response);
+        setActiveOrder(response.order);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Erro ao buscar o pedido ativo");
       });
   }, []);
 
@@ -55,33 +70,81 @@ function Cart() {
       }),
       paymentMethod: paymentMethod,
     };
-    console.log("BODY", body);
+    if (body.products.length === 0) {
+      alert("Seu carrinho está vazio");
+      return;
+    }
+    if (paymentMethod === "") {
+      alert("Selecione um método de pagamento");
+      return;
+    }
+    if (activeOrder) {
+      alert("Você já possui um pedido ativo");
+      return;
+    }
     postOrder(body, restaurantOrder!.id)
-    .then((response) => {
-      console.log(response);
-      router.push("/home");
-      alert("Pedido realizado com sucesso!");
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Erro ao realizar pedido");
-    });
+      .then((response) => {
+        router.push("/home");
+        alert("Pedido realizado com sucesso!");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Erro ao realizar pedido");
+      });
   };
-  
+
   return (
     <GlobalPage>
       <CSSReset />
       <MainMenu />
-      <button type="button" onClick={() => router.back()}>
-        <ChevronLeftIcon fontSize="medium" />
-      </button>
-      <h2>Meu carrinho</h2>
+      <CartDetailsHeader>
+        <div>
+          <button
+            type="button"
+            style={{
+              cursor: "pointer",
+              background: "transparent",
+              border: "none",
+            }}
+            onClick={() => router.back()}
+          >
+            <ArrowBackIosIcon fontSize="small" />
+          </button>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "65%",
+          }}
+        >
+          <h2>Meu carrinho</h2>
+        </div>
+      </CartDetailsHeader>
+      <HorizontalLine style={{ width: "50%" }} />
       <OrderAddress address={address} />
-      <RestaurantDetails restaurantOrder={restaurantOrder!} />
-      <RestaurantDetailsMenu>{products}</RestaurantDetailsMenu>
-      <ShippingOrder cart={cart} restaurantOrder={restaurantOrder!} />
-      <span>Forma de pagamento</span>
-      <HorizontalLineSolid />
+      {products.length > 0 ? (
+        <OrderContainerDiv>
+          <RestaurantOrderDetails restaurantOrder={restaurantOrder!} />
+          <RestaurantDetailsMenu>{products}</RestaurantDetailsMenu>
+          <ShippingOrder cart={cart} restaurantOrder={restaurantOrder!} />
+        </OrderContainerDiv>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            height: "200px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h3>Carrinho vazio</h3>
+        </div>
+      )}
+      <div style={{ margin: "16px 0px 16px 0px" }}>
+        <h3>Forma de pagamento</h3>
+      </div>
+      <HorizontalLineSolid style={{ width: "50%" }} />
       <PaymentMethod
         paymentMethod={paymentMethod}
         setPaymentMethod={setPaymentMethod}
@@ -94,8 +157,8 @@ function Cart() {
           marginTop: "12px",
           textTransform: "none",
           height: "48px",
+          width: "20%",
         }}
-        // fullWidth
         onClick={() => {
           handleConfirmOrder();
         }}

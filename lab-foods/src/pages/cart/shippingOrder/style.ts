@@ -4,12 +4,11 @@ export const ShippingContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 50%;
+  align-items: flex-start;
+  width: 20%;
   height: 70px;
-  /* background-color: #eeeeee; */
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 48px;
   span {
     font-size: 16px;
     font-weight: 500;

@@ -2,11 +2,11 @@ import { IRestaurantOrder } from "@/interfaces/restaurants/interface";
 import React from "react";
 import { RestaurantContainer } from "./style";
 
-interface IRestaurantDetails {
+interface IRestaurantOrderDetails {
   restaurantOrder: IRestaurantOrder;
 }
 
-function RestaurantDetails({ restaurantOrder }: IRestaurantDetails) {
+function RestaurantOrderDetails({ restaurantOrder }: IRestaurantOrderDetails) {
   return (
     <RestaurantContainer>
       <span style={{ color: "#e8222e" }}>{restaurantOrder.name}</span>
@@ -16,4 +16,4 @@ function RestaurantDetails({ restaurantOrder }: IRestaurantDetails) {
   );
 }
 
-export default RestaurantDetails;
+export default RestaurantOrderDetails;

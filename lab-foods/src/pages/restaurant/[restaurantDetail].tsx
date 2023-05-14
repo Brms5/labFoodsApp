@@ -40,7 +40,7 @@ function RestaurantDetail() {
             name: response.data.restaurant.name,
             address: response.data.restaurant.address,
             deliveryTime: response.data.restaurant.deliveryTime,
-            shipping: response.data.restaurant.shipping,            
+            shipping: response.data.restaurant.shipping,
           });
         })
         .catch((error) => {
@@ -83,7 +83,7 @@ function RestaurantDetail() {
           <div
             style={{ display: "flex", justifyContent: "center", width: "100%" }}
           >
-            <h3>Restaurante</h3>
+            <h2>Restaurante</h2>
           </div>
         </RestaurantDetailsHeader>
         <HorizontalLine />
