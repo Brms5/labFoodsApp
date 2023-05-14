@@ -26,7 +26,6 @@ The following technologies were used in the construction of the project:
 - React
 - Next.js
 - Axios
-- Jest
 - Style components
 - Material UI
 
