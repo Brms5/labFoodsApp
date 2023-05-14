@@ -1,8 +1,11 @@
 {
   "name": "lab-foods",
   "version": "0.1.0",
+  "homepage": "https://brms5.github.io/labFoodsApp",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -28,6 +31,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.26",
-    "babel-plugin-styled-components": "^2.0.7"
+    "babel-plugin-styled-components": "^2.0.7",
+    "gh-pages": "^5.0.0"
   }
 }
