@@ -44,7 +44,7 @@ export default function ProductAddModal({
 }: IProductAddModal) {
   const { cart, setCart } = useContext(GlobalContext);
   const [open, setOpen] = useState(false);
-  const [quantity, setQuantity] = useState<any>(0);
+  const [quantity, setQuantity] = useState<any>("0");
 
   const handleChange = (event: SelectChangeEvent) => {
     setQuantity(parseInt(event.target.value));
