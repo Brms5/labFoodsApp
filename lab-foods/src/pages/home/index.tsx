@@ -1,6 +1,5 @@
 import {
   GlobalPage,
-  HorizontalLine,
   RestaurantsDiv,
 } from "@/styles/GlobalStyle";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -16,12 +15,14 @@ import { RestaurantsCardsDiv } from "./styled";
 import { useRouter } from "next/router";
 import MainMenu from "@/components/mainMenu";
 import { getActiveOrder } from "@/services/order/order";
+import ActiveOrder from "./activeOrder";
+import { IOrderHistory } from "@/interfaces/cart/interface";
 
 function Home() {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
   const [search, setSearch] = useState("");
   const [restaurantOption, setRestaurantOption] = useState<string | null>(null);
-  const [activeOrder, setActiveOrder] = useState();
+  const [activeOrder, setActiveOrder] = useState<IOrderHistory>();
 
   const router = useRouter();
 
@@ -56,6 +57,8 @@ function Home() {
     });
   };
 
+  console.log("activeOrder", activeOrder);
+
   useEffect(() => {
     getRestaurants()
       .then((response) => {
@@ -67,7 +70,7 @@ function Home() {
     getActiveOrder()
       .then((response) => {
         console.log("response", response);
-        setActiveOrder(response.data);
+        setActiveOrder(response.order);
       })
       .catch((error) => {
         console.log(error);
@@ -81,7 +84,6 @@ function Home() {
       <MainMenu />
       <RestaurantsDiv>
         <TextField
-          // fullWidth
           id="restaurant"
           placeholder="Restaurante"
           variant="outlined"
@@ -104,6 +106,7 @@ function Home() {
         />
         <RestaurantsCardsDiv>{restaurantsComponents}</RestaurantsCardsDiv>
       </RestaurantsDiv>
+      {activeOrder?.restaurantName ? <ActiveOrder activeOrder={activeOrder} /> : <> </>}
     </GlobalPage>
   );
 }

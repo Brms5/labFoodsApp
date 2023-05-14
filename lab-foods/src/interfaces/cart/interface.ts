@@ -13,3 +13,14 @@ export interface IOrder {
   products: IProductOrder[];
   paymentMethod: string;
 }
+
+export interface IOrderHistorydata {
+  data: IOrderHistory[];
+}
+
+export interface IOrderHistory {
+  createdAt: number;
+  expiresAt: number;
+  restaurantName: string;
+  totalPrice: number;
+}

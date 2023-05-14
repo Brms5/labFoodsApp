@@ -15,17 +15,10 @@ function ShippingOrder({ cart, restaurantOrder }: IShippingOrder) {
     })
     .reduce((a, b) => a + b, 0);
 
-  console.log("TOTAL PRICE", totalPrice);
-
   return (
     <ShippingContainer>
-      <div>
-        <span>{`Frete R$${restaurantOrder.shipping}`}</span>
-      </div>
-      <div>
-        <span>SUBTOTAL</span>
-        <span>{`R$${totalPrice}`}</span>
-      </div>
+      <span>{`Frete: R$${restaurantOrder.shipping}`}</span>
+      <span>{`SUBTOTAL: R$${totalPrice}`}</span>
     </ShippingContainer>
   );
 }
