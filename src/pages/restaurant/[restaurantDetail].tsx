@@ -15,7 +15,7 @@ import {
   RestaurantDetailsMenu,
   RestaurantImgDiv,
   RestaurantInformationTxt,
-} from "./styled";
+} from "./style";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
 import RestaurantMenuCard from "./restaurantMenuCard";

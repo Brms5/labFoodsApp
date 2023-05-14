@@ -10,7 +10,7 @@ import {
 } from "@/styles/GlobalStyle";
 import React, { useContext, useEffect, useState } from "react";
 import RestaurantMenuCard from "../restaurant/restaurantMenuCard";
-import { RestaurantDetailsMenu } from "../restaurant/styled";
+import { RestaurantDetailsMenu } from "../restaurant/style";
 import OrderAddress from "./orderAddress";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
