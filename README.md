@@ -14,7 +14,7 @@ https://documenter.getpostman.com/view/7549981/SWTEdGtT
 - [X] Search and selection of restaurants(developed);
 - [X] Restaurant menu(developed);
 - [X] Cart and checkout(developed);
-- [ ] Profile, edit profile and order history(developing).
+- [X] Profile, edit profile and order history(developing).
 
 ## :hammer_and_wrench: Technology
 
