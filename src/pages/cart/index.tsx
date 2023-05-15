@@ -9,18 +9,18 @@ import {
   HorizontalLineSolid,
 } from "@/styles/GlobalStyle";
 import React, { useContext, useEffect, useState } from "react";
-import RestaurantMenuCard from "../restaurant/restaurantMenuCard";
+import RestaurantMenuCard from "../../components/restaurant/restaurantMenuCard";
 import { RestaurantDetailsMenu } from "../restaurant/style";
-import OrderAddress from "./orderAddress";
+import OrderAddress from "../../components/cart/orderAddress";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
-import PaymentMethod from "./paymentMethod";
 import { Button } from "@mui/material";
 import { getActiveOrder, postOrder } from "@/services/order/order";
 import { CartDetailsHeader, OrderContainerDiv } from "./style";
-import ShippingOrder from "./shippingOrder";
-import RestaurantOrderDetails from "./restaurantOrderDetails";
 import { IOrderHistory } from "@/interfaces/cart/interface";
+import PaymentMethod from "@/components/cart/paymentMethod";
+import RestaurantOrderDetails from "@/components/cart/restaurantOrderDetails";
+import ShippingOrder from "@/components/cart/shippingOrder";
 
 function Cart() {
   const { cart, restaurantOrder } = useContext(GlobalContext);

@@ -9,14 +9,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CSSReset } from "@/styles/CSSReset";
 import { getRestaurants } from "@/services/restaurants/restaurants";
 import { IRestaurant } from "@/interfaces/restaurants/interface";
-import RestaurantsOptions from "./restaurantsOptions";
-import RestaurantCard from "./restaurantCard";
 import { RestaurantsCardsDiv } from "./styled";
 import { useRouter } from "next/router";
 import MainMenu from "@/components/mainMenu";
 import { getActiveOrder } from "@/services/order/order";
-import ActiveOrder from "./activeOrder";
+import ActiveOrder from "../../components/home/activeOrder";
 import { IOrderHistory } from "@/interfaces/cart/interface";
+import RestaurantsOptions from "@/components/home/restaurantsOptions";
+import RestaurantCard from "@/components/home/restaurantCard";
 
 function Home() {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
@@ -44,8 +44,8 @@ function Home() {
     return (
       <RestaurantCard
         key={restaurant.id}
-        restaurant={restaurant}
         onClickRestaurant={() => onClickRestaurant(restaurant.id)}
+        restaurant={restaurant}
       />
     );
   });

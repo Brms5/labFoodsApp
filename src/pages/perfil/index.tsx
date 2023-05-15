@@ -9,11 +9,11 @@ import {
   HorizontalLine,
   HorizontalLineSolid,
 } from "@/styles/GlobalStyle";
-import React, { use, useEffect, useState } from "react";
-import ProfileAccount from "./profileAccount";
-import ProfileAddress from "./profileAddress";
-import ProfileOrders from "./profileOrders";
+import React, { useEffect, useState } from "react";
+import ProfileAccount from "../../components/profile/profileAccount";
 import { ProfileContainerDiv, ProfileContainerHeader } from "./style";
+import ProfileAddress from "@/components/profile/profileAddress";
+import ProfileOrders from "@/components/profile/profileOrders";
 
 function Perfil() {
   const [profile, setProfile] = useState<Profile>();

@@ -18,7 +18,7 @@ import {
 } from "./style";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
-import RestaurantMenuCard from "./restaurantMenuCard";
+import RestaurantMenuCard from "../../components/restaurant/restaurantMenuCard";
 import MainMenu from "@/components/mainMenu";
 import { GlobalContext } from "@/context/context";
 

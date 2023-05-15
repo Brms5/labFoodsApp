@@ -5,8 +5,7 @@ import {
   IProduct,
 } from "@/interfaces/restaurantProduct/interface";
 import React, { useContext, useMemo, useState } from "react";
-import ProductAddModal from "./productAddModal";
-import ProductOrderNumber from "./productOrderNumber";
+import ProductAddModal from "../productAddModal";
 import {
   RestaurantDetailContainer,
   RestaurantCard,
@@ -14,6 +13,7 @@ import {
   TextRestaurantCard,
   OrderNumberDiv,
 } from "./style";
+import ProductOrderNumber from "../productOrderNumber";
 
 interface IRestaurantMenuCard {
   product: IProduct;
