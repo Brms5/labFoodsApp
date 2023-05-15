@@ -1,5 +1,4 @@
 import { CSSReset } from "@/styles/CSSReset";
-import { LoginStructureDiv } from "./styled";
 import logoPng2x from "../../assets/logoPng2x.png";
 import Image from "next/image";
 import {
@@ -17,13 +16,24 @@ import React, { useState } from "react";
 import { Form, GlobalPage, TextStyled } from "@/styles/GlobalStyle";
 import { postLogin } from "@/services/authentication/login";
 import { useRouter } from "next/router";
+import styled from "styled-components";
+
+const LoginStructureDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 65vh;
+  max-width: 500px;
+  width: 100%;
+`;
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState<String>("");
 
-  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
   const validateEmail = () => {
     if (userEmail.match(pattern)) {
       return false;
@@ -32,7 +42,7 @@ function Login() {
     } else {
       return true;
     }
-  }
+  };
 
   const validatePassword = () => {
     if (userPassword.length < 1 || userPassword.length >= 6) {
@@ -40,7 +50,7 @@ function Login() {
     } else {
       return true;
     }
-  }
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -51,16 +61,18 @@ function Login() {
   const router = useRouter();
 
   const handleClickSubmit = async () => {
-    postLogin(userEmail, userPassword).then((response) => {
-      if (response.data.user.hasAddress == true) {
-        router.push('/home');
-      } else if (response.data.token) {
-        router.push('/address');
-      }
-    }).catch((error) => {
-      console.log(error);
-    })
-  }
+    postLogin(userEmail, userPassword)
+      .then((response) => {
+        if (response.data.user.hasAddress == true) {
+          router.push("/home");
+        } else if (response.data.token) {
+          router.push("/address");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <GlobalPage>
@@ -125,17 +137,17 @@ function Login() {
           >
             Entrar
           </Button>
-            <Button
-              variant="text"
-              style={{
-                color: "black",
-                marginTop: "12px",
-                textTransform: "none",
-              }}
-              onClick={() => router.push("/register")}
-            >
-              Não possui cadastro? Clique aqui.
-            </Button>
+          <Button
+            variant="text"
+            style={{
+              color: "black",
+              marginTop: "12px",
+              textTransform: "none",
+            }}
+            onClick={() => router.push("/register")}
+          >
+            Não possui cadastro? Clique aqui.
+          </Button>
         </Form>
       </LoginStructureDiv>
     </GlobalPage>

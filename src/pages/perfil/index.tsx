@@ -11,9 +11,23 @@ import {
 } from "@/styles/GlobalStyle";
 import React, { useEffect, useState } from "react";
 import ProfileAccount from "../../components/profile/profileAccount";
-import { ProfileContainerDiv, ProfileContainerHeader } from "./style";
 import ProfileAddress from "@/components/profile/profileAddress";
 import ProfileOrders from "@/components/profile/profileOrders";
+import styled from "styled-components";
+
+export const ProfileContainerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+`;
+
+export const ProfileContainerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 50px;
+`;
 
 function Perfil() {
   const [profile, setProfile] = useState<Profile>();
@@ -36,9 +50,11 @@ function Perfil() {
       });
   }, []);
 
-  const ordersCard = orders.map((order: IOrderHistory, index: React.Key | null | undefined) => {
-    return <ProfileOrders key={index} order={order} />;
-  });
+  const ordersCard = orders.map(
+    (order: IOrderHistory, index: React.Key | null | undefined) => {
+      return <ProfileOrders key={index} order={order} />;
+    }
+  );
 
   return (
     <GlobalPage>
@@ -69,7 +85,7 @@ function Perfil() {
           <h3>Histórico de pedidos</h3>
         </div>
         <HorizontalLineSolid style={{ width: "50%" }} />
-        {orders ? ( 
+        {orders ? (
           ordersCard
         ) : (
           <h3 style={{ marginTop: "16px" }}>Você não realizou nenhum pedido</h3>

@@ -13,7 +13,15 @@ import { PutAddressForm } from "@/interfaces/authentication/interface";
 import { putAddress } from "@/services/authentication/register";
 import { useRouter } from "next/router";
 import { getAddress } from "@/services/user/address";
-import { AddressUpdateHeader } from "./style";
+import styled from "styled-components";
+
+const AddressUpdateHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+`;
 
 function AddressUpdate() {
   const [userForm, setUserForm] = useState<PutAddressForm>({

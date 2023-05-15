@@ -1,7 +1,4 @@
-import {
-  GlobalPage,
-  RestaurantsDiv,
-} from "@/styles/GlobalStyle";
+import { GlobalPage, RestaurantsDiv } from "@/styles/GlobalStyle";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,7 +6,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CSSReset } from "@/styles/CSSReset";
 import { getRestaurants } from "@/services/restaurants/restaurants";
 import { IRestaurant } from "@/interfaces/restaurants/interface";
-import { RestaurantsCardsDiv } from "./styled";
 import { useRouter } from "next/router";
 import MainMenu from "@/components/mainMenu";
 import { getActiveOrder } from "@/services/order/order";
@@ -17,6 +13,17 @@ import ActiveOrder from "../../components/home/activeOrder";
 import { IOrderHistory } from "@/interfaces/cart/interface";
 import RestaurantsOptions from "@/components/home/restaurantsOptions";
 import RestaurantCard from "@/components/home/restaurantCard";
+import styled from "styled-components";
+
+const RestaurantsCardsDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 20px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+`;
 
 function Home() {
   const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
@@ -106,7 +113,11 @@ function Home() {
         />
         <RestaurantsCardsDiv>{restaurantsComponents}</RestaurantsCardsDiv>
       </RestaurantsDiv>
-      {activeOrder?.restaurantName ? <ActiveOrder activeOrder={activeOrder} /> : <> </>}
+      {activeOrder?.restaurantName ? (
+        <ActiveOrder activeOrder={activeOrder} />
+      ) : (
+        <> </>
+      )}
     </GlobalPage>
   );
 }

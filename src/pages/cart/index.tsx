@@ -10,17 +10,41 @@ import {
 } from "@/styles/GlobalStyle";
 import React, { useContext, useEffect, useState } from "react";
 import RestaurantMenuCard from "../../components/restaurant/restaurantMenuCard";
-import { RestaurantDetailsMenu } from "../restaurant/style";
 import OrderAddress from "../../components/cart/orderAddress";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useRouter } from "next/router";
 import { Button } from "@mui/material";
 import { getActiveOrder, postOrder } from "@/services/order/order";
-import { CartDetailsHeader, OrderContainerDiv } from "./style";
 import { IOrderHistory } from "@/interfaces/cart/interface";
 import PaymentMethod from "@/components/cart/paymentMethod";
 import RestaurantOrderDetails from "@/components/cart/restaurantOrderDetails";
 import ShippingOrder from "@/components/cart/shippingOrder";
+import styled from "styled-components";
+
+const CartDetailsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50px;
+`;
+
+const OrderContainerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+`;
+
+const RestaurantDetailsMenu = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 90%;
+  margin-top: 20px;
+`;
 
 function Cart() {
   const { cart, restaurantOrder } = useContext(GlobalContext);
@@ -45,7 +69,7 @@ function Cart() {
       .catch((error) => {
         console.log(error);
       });
-      getActiveOrder()
+    getActiveOrder()
       .then((response) => {
         console.log("response", response);
         setActiveOrder(response.order);

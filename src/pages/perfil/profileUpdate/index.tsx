@@ -12,7 +12,15 @@ import Link from "next/link";
 import { PutRegisterForm } from "@/interfaces/authentication/interface";
 import { useRouter } from "next/router";
 import { getProfile, updateProfile } from "@/services/profile/profile";
-import { ProfileUpdateHeader } from "./style";
+import styled from "styled-components";
+
+const ProfileUpdateHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+`;
 
 function ProfileUpdate() {
   const [userForm, setUserForm] = useState<PutRegisterForm>({

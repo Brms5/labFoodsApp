@@ -8,19 +8,58 @@ import { IRestaurantDetails } from "@/interfaces/restaurants/interface";
 import { getRestaurantDetails } from "@/services/restaurants/restaurants";
 import { useRouter } from "next/router";
 import { CSSReset } from "@/styles/CSSReset";
-import {
-  RestaurantDetailsDiv,
-  RestaurantDetailsHeader,
-  RestaurantDetailsInformation,
-  RestaurantDetailsMenu,
-  RestaurantImgDiv,
-  RestaurantInformationTxt,
-} from "./style";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Link from "next/link";
 import RestaurantMenuCard from "../../components/restaurant/restaurantMenuCard";
 import MainMenu from "@/components/mainMenu";
 import { GlobalContext } from "@/context/context";
+import styled from "styled-components";
+
+const RestaurantDetailsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+`;
+
+const RestaurantDetailsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 50px;
+`;
+
+const RestaurantDetailsInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const RestaurantImgDiv = styled.img`
+  display: flex;
+  width: 50%;
+  height: 400px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
+const RestaurantInformationTxt = styled.p`
+  display: flex;
+  width: 50%;
+  height: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+`;
+
+const RestaurantDetailsMenu = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 90%;
+  margin-top: 20px;
+`;
 
 function RestaurantDetail() {
   const { setRestaurantOrder } = useContext(GlobalContext);
